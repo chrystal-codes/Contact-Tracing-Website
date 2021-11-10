@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bluetooth Tracker</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <form autocomplete="on" id="sheetdb-form">
+      STUDENT ID <input type="number" minlength="6" maxlength="6" id="student_id"></br>
+      ROOM NUMBER <input type="number" min="1000" max="3100" id="room_number"></br>
+      <button type="submit" id="submit-form">SUBMIT</button>
+    </form> 
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script>
+      var running = false;
+      function sendData(){
+        axios.post('https://sheetdb.io/api/v1/a2p84tz3nd0mb?sheet='+roomNum,
+                  {"data":{"studentID":studentID}
+          }).then(response => {
+        console.log("data sent!");
+            console.log(response);
+          })
+      }
+      function submitForm(){
+        running = true;
+        
+        var studentID = document.getElementById("student_id").value;
+        var roomNum = document.getElementById("room_number").value;
+        
+        console.log("success!");
+      }
+      if (running){
+        window.setInterval(sendData,120000);    
+      }
+      
+      document.getElementById("submit-form").addEventListener("click",submitForm);
+      
+      
+    </script> 
+  </body>
+</html>
