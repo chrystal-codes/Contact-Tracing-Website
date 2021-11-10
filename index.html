@@ -25,9 +25,11 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 		<script>
 			var running = false;
+			console.log(running);
 			window.setInterval(sendData,120000);  
 			
 			function sendData(){
+				console.log("attempting to send data...");
 				if (running == true){
 					axios.post('https://sheetdb.io/api/v1/a2p84tz3nd0mb?sheet='+roomNum,
 							  {"data":{"studentID":studentID}
@@ -36,6 +38,9 @@
 						console.log(response);
 					})
 				}
+				else{
+					console.log("no data to send. failure"
+				}
 			}
 			function submitForm(){
 				running = true;
@@ -43,7 +48,7 @@
 				var studentID = document.getElementById("student_id").value;
 				var roomNum = document.getElementById("room_number").value;
 
-				console.log("success!");
+				console.log("form submitted!");
 			}
 
 			 document.getElementById("submit-form").addEventListener("click",submitForm);
