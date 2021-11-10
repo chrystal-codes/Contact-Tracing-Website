@@ -4,16 +4,50 @@
     	<meta charset="UTF-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-    	<title>HTML 5 Boilerplate</title>
+    	<titleCOntact Tracing App</title>
 	</head>
 	<body>
 		<h1>Contact Tracing Web Application</h1>
 		<h4>by Christabel Segun</h3>
 		</hr>
 		<h3>How to Use</h3>
-		<p>In order to use this application, enter your student ID and the numbe rof the room you are currently in. Then, 
-			click on the submit button and keep your chromebook open, 
+		<p>In order to use this application, enter your student ID and the numbe rof the room you are currently in. 
+			Then, click on the submit button and keep your chromebook open, 
 			in order for the website to collect your location data and keep you safe! :)</p>
+		</hr>
+		
+		<form autocomplete="on" id="sheetdb-form">
+		  STUDENT ID <input type="number" minlength="6" maxlength="6" id="student_id"></br>
+		  ROOM NUMBER <input type="number" min="1000" max="3100" id="room_number"></br>
+		  <button type="submit" id="submit-form">SUBMIT</button>
+		</form> 
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+		<script>
+			var running = false;
+			window.setInterval(sendData,120000);  
+			
+			function sendData(){
+				if (running == true){
+					axios.post('https://sheetdb.io/api/v1/a2p84tz3nd0mb?sheet='+roomNum,
+							  {"data":{"studentID":studentID}
+					  }).then(response => {
+					console.log("data sent!");
+						console.log(response);
+					})
+				}
+			}
+			function submitForm(){
+				running = true;
+
+				var studentID = document.getElementById("student_id").value;
+				var roomNum = document.getElementById("room_number").value;
+
+				console.log("success!");
+			}
+
+			 document.getElementById("submit-form").addEventListener("click",submitForm);
+		</script> 
 		
 	</body>
 </html>
